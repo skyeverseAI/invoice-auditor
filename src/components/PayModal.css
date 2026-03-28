@@ -1,0 +1,214 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 0.5px solid var(--border-md);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 360px;
+  animation: modalIn 0.18s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.modal__title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 3px;
+}
+
+.modal__sub {
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.modal__close:hover { background: var(--surface2); color: var(--text); }
+
+.modal__amount {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--green);
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.modal__details {
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.modal__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 13px;
+  border-bottom: 0.5px solid var(--border);
+}
+.modal__row:last-child { border-bottom: none; }
+.modal__row span:first-child { color: var(--text-2); }
+.modal__row span:last-child { font-weight: 500; }
+.mono { font-family: var(--mono) !important; font-size: 12px !important; }
+
+.modal__upi-box {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.modal__upi-id {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.modal__upi-label {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.modal__apps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.upi-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 6px;
+  border: 0.5px solid var(--border-md);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: all 0.12s;
+  font-family: var(--font);
+}
+.upi-app:hover { background: var(--green-bg); border-color: #97C459; color: var(--green); }
+
+.upi-app__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.modal__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 0.5px solid;
+  transition: all 0.12s;
+  font-family: var(--font);
+}
+
+.btn--primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+.btn--primary:hover { opacity: 0.85; }
+
+.btn--cancel {
+  background: transparent;
+  border-color: var(--border-md);
+  color: var(--text-2);
+  flex: 0.5;
+}
+.btn--cancel:hover { background: var(--surface2); }
+
+/* Success screen */
+.modal__success {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.success-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--green);
+}
+
+.modal__success h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.modal__success p {
+  font-size: 13px;
+  color: var(--text-2);
+}

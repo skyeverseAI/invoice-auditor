@@ -1,0 +1,41 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --border: rgba(0,0,0,0.08);
+  --border-md: rgba(0,0,0,0.13);
+  --text: #1a1a18;
+  --text-2: #6b6b65;
+  --text-3: #9e9e97;
+  --green: #3B6D11;
+  --green-bg: #EAF3DE;
+  --green-mid: #639922;
+  --red: #791F1F;
+  --red-bg: #FCEBEB;
+  --red-mid: #E24B4A;
+  --amber: #633806;
+  --amber-bg: #FAEEDA;
+  --amber-mid: #EF9F27;
+  --blue: #0C447C;
+  --blue-bg: #E6F1FB;
+  --blue-mid: #378ADD;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: var(--font); cursor: pointer; }
+input, select { font-family: var(--font); }
