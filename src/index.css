@@ -39,3 +39,17 @@ body {
 
 button { font-family: var(--font); cursor: pointer; }
 input, select { font-family: var(--font); }
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a18;
+    --surface: #232321;
+    --surface2: #2c2c2a;
+    --border: rgba(255,255,255,0.08);
+    --border-md: rgba(255,255,255,0.13);
+    --text: #f0efe9;
+    --text-2: #b4b2a9;
+    --text-3: #6b6b65;
+  }
+}

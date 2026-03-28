@@ -10,7 +10,13 @@ const WEBHOOK_URL = 'https://sherri-finespun-outspokenly.ngrok-free.dev/webhook/
 export default function App() {
   const [invoices, setInvoices] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null)const res = await fetch(WEBHOOK_URL, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  mode: 'cors',
+})
   const [lastRefresh, setLastRefresh] = useState(null)
   const [payInvoice, setPayInvoice] = useState(null)
   const [upiId, setUpiId] = useState('yourname@upi')
@@ -27,7 +33,10 @@ export default function App() {
     try {
       setLoading(true)
       setError(null)
-      const res = await fetch(WEBHOOK_URL)
+      const res = await fetch(WEBHOOK_URL, {
+      method: 'GET',
+      mode: 'cors',
+    })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       const rows = data.invoices || []
