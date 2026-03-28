@@ -51,5 +51,12 @@ input, select { font-family: var(--font); }
     --text: #f0efe9;
     --text-2: #b4b2a9;
     --text-3: #6b6b65;
+    --green-bg: #1a2e0a;
+    --green: #97C459;
+    --red-bg: #2e0a0a;
+    --red: #F09595;
+    --amber-bg: #2e1e0a;
+    --blue-bg: #0a1a2e;
+    --blue: #85B7EB;
   }
 }
