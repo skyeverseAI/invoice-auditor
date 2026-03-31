@@ -9,6 +9,7 @@
   padding: 1rem;
 }
 
+/* 🔥 Prevent accidental scroll issues on mobile */
 .modal {
   background: var(--surface);
   border-radius: var(--radius-lg);
@@ -17,6 +18,9 @@
   width: 100%;
   max-width: 360px;
   animation: modalIn 0.18s ease;
+  position: relative;
+  z-index: 501;
+  touch-action: manipulation;
 }
 
 @keyframes modalIn {
@@ -50,10 +54,13 @@
   color: var(--text-3);
   font-size: 14px;
   cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
 }
-.modal__close:hover { background: var(--surface2); color: var(--text); }
+.modal__close:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
 
 .modal__amount {
   font-size: 36px;
@@ -80,45 +87,65 @@
   border-bottom: 0.5px solid var(--border);
 }
 .modal__row:last-child { border-bottom: none; }
+
 .modal__row span:first-child { color: var(--text-2); }
 .modal__row span:last-child { font-weight: 500; }
-.mono { font-family: var(--mono) !important; font-size: 12px !important; }
 
+.mono {
+  font-family: var(--mono) !important;
+  font-size: 12px !important;
+}
+
+/* 🔥 UPI INPUT BOX */
 .modal__upi-box {
   background: var(--bg);
   border: 0.5px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 10px 14px;
-  text-align: center;
+  padding: 10px;
   margin-bottom: 1rem;
 }
 
-.modal__upi-id {
-  font-family: var(--mono);
+/* 🔥 NEW INPUT */
+.modal__upi-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--border-md);
   font-size: 14px;
-  font-weight: 500;
+  font-family: var(--mono);
+  outline: none;
+  background: var(--surface);
   color: var(--text);
-  margin-bottom: 3px;
+}
+
+/* 🔥 Focus state */
+.modal__upi-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(151, 196, 89, 0.15);
 }
 
 .modal__upi-label {
   font-size: 11px;
   color: var(--text-3);
+  margin-top: 6px;
+  text-align: center;
 }
 
+/* 🔥 APP BUTTONS */
 .modal__apps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 1.25rem;
 }
 
+/* 🔥 Bigger tap area (mobile fix) */
 .upi-app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  padding: 10px 6px;
+  gap: 6px;
+  padding: 12px 6px;
   border: 0.5px solid var(--border-md);
   border-radius: var(--radius-md);
   background: var(--surface);
@@ -128,8 +155,19 @@
   color: var(--text-2);
   transition: all 0.12s;
   font-family: var(--font);
+  min-height: 64px;
+  user-select: none;
 }
-.upi-app:hover { background: var(--green-bg); border-color: #97C459; color: var(--green); }
+
+.upi-app:active {
+  transform: scale(0.96);
+}
+
+.upi-app:hover {
+  background: var(--green-bg);
+  border-color: #97C459;
+  color: var(--green);
+}
 
 .upi-app__icon {
   width: 28px;
@@ -144,6 +182,7 @@
   color: var(--text);
 }
 
+/* ACTION BUTTONS */
 .modal__actions {
   display: flex;
   gap: 8px;
@@ -154,7 +193,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 38px;
+  height: 40px;
   border-radius: var(--radius-sm);
   font-size: 13px;
   font-weight: 500;
@@ -164,12 +203,19 @@
   font-family: var(--font);
 }
 
+.btn:active {
+  transform: scale(0.98);
+}
+
 .btn--primary {
   background: var(--text);
   border-color: var(--text);
   color: #fff;
 }
-.btn--primary:hover { opacity: 0.85; }
+
+.btn--primary:hover {
+  opacity: 0.9;
+}
 
 .btn--cancel {
   background: transparent;
@@ -177,9 +223,12 @@
   color: var(--text-2);
   flex: 0.5;
 }
-.btn--cancel:hover { background: var(--surface2); }
 
-/* Success screen */
+.btn--cancel:hover {
+  background: var(--surface2);
+}
+
+/* SUCCESS SCREEN */
 .modal__success {
   text-align: center;
   padding: 1rem 0;

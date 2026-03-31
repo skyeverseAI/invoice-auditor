@@ -14,8 +14,10 @@ export default function App() {
   const [error, setError] = useState(null)
   const [lastRefresh, setLastRefresh] = useState(null)
   const [payInvoice, setPayInvoice] = useState(null)
-  const [upiId, setUpiId] = useState(() => localStorage.getItem('upi_id') || '')
-  const [upiEditing, setUpiEditing] = useState(!localStorage.getItem('upi_id'))
+
+  // 🔥 Keep as optional default only
+  const [upiId] = useState(() => localStorage.getItem('upi_id') || '')
+
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
   const [toast, setToast] = useState(null)
@@ -25,26 +27,24 @@ export default function App() {
     setTimeout(() => setToast(null), 2500)
   }
 
-  const saveUpi = () => {
-    localStorage.setItem('upi_id', upiId)
-    setUpiEditing(false)
-    showToast('UPI ID saved!', 'success')
-  }
-
   const fetchData = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
+
       const res = await fetch(WEBHOOK_URL, {
         method: 'GET',
         mode: 'cors',
         headers: { 'ngrok-skip-browser-warning': 'true' }
       })
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
       const data = await res.json()
       setInvoices(data.invoices || [])
       setLastRefresh(new Date())
-    } catch (e) {
+
+    } catch {
       setError('Could not fetch data from n8n. Is the workflow active?')
     } finally {
       setLoading(false)
@@ -56,6 +56,7 @@ export default function App() {
   const handleOverride = async (inv) => {
     try {
       showToast('Overriding...', 'info')
+
       const res = await fetch(OVERRIDE_URL, {
         method: 'POST',
         mode: 'cors',
@@ -65,9 +66,12 @@ export default function App() {
         },
         body: JSON.stringify({ invoice_number: inv.Invoice_Number })
       })
+
       if (!res.ok) throw new Error()
+
       showToast('Invoice overridden to PASS!', 'success')
       fetchData()
+
     } catch {
       showToast('Override failed. Check n8n workflow.', 'error')
     }
@@ -75,8 +79,16 @@ export default function App() {
 
   const filtered = invoices.filter(inv => {
     const q = search.toLowerCase()
-    const matchQ = !q || (inv.Vendor || '').toLowerCase().includes(q) || (inv.Invoice_Number || '').toLowerCase().includes(q)
-    const matchS = !statusFilter || inv.Status === statusFilter
+
+    const matchQ =
+      !q ||
+      (inv.Vendor || '').toLowerCase().includes(q) ||
+      (inv.Invoice_Number || '').toLowerCase().includes(q)
+
+    const matchS =
+      !statusFilter ||
+      inv.Status === statusFilter
+
     return matchQ && matchS
   })
 
@@ -87,12 +99,16 @@ export default function App() {
       {payInvoice && (
         <PayModal
           invoice={payInvoice}
-          upiId={upiId}
+          upiId={upiId} // optional default
           onClose={() => setPayInvoice(null)}
-          onPaid={() => { setPayInvoice(null); showToast('Payment initiated!', 'success') }}
+          onPaid={() => {
+            setPayInvoice(null)
+            showToast('Payment initiated!', 'success')
+          }}
         />
       )}
 
+      {/* 🔥 CLEAN HEADER (NO UPI INPUT) */}
       <header className="header">
         <div className="header__left">
           <div className="header__logo">
@@ -100,30 +116,18 @@ export default function App() {
             <span className="header__title">Invoice Auditor</span>
           </div>
           <span className="header__sub">
-            {lastRefresh ? `Updated ${lastRefresh.toLocaleTimeString()}` : 'Loading...'}
+            {lastRefresh
+              ? `Updated ${lastRefresh.toLocaleTimeString()}`
+              : 'Loading...'}
           </span>
         </div>
+
         <div className="header__right">
-          {upiEditing ? (
-            <div className="upi-input-wrap">
-              <span className="upi-label">UPI</span>
-              <input
-                className="upi-input"
-                value={upiId}
-                onChange={e => setUpiId(e.target.value)}
-                placeholder="yourname@upi"
-                onKeyDown={e => e.key === 'Enter' && saveUpi()}
-              />
-              <button className="btn btn--save" onClick={saveUpi}>Save</button>
-            </div>
-          ) : (
-            <div className="upi-saved" onClick={() => setUpiEditing(true)} title="Click to edit">
-              <span className="upi-label">UPI</span>
-              <span className="upi-value">{upiId || 'Set UPI ID'}</span>
-              <span className="upi-edit">✎</span>
-            </div>
-          )}
-          <button className="btn btn--ghost" onClick={fetchData} disabled={loading}>
+          <button
+            className="btn btn--ghost"
+            onClick={fetchData}
+            disabled={loading}
+          >
             {loading ? '...' : '↻'}
           </button>
         </div>
@@ -145,12 +149,24 @@ export default function App() {
         <>
           <MetricCards invoices={invoices} />
           <Charts invoices={invoices} />
+
           <div className="table-section">
             <div className="table-section__header">
               <h2 className="section-title">All invoices</h2>
+
               <div className="filters">
-                <input className="filter-input" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
-                <select className="filter-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+                <input
+                  className="filter-input"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                />
+
+                <select
+                  className="filter-select"
+                  value={statusFilter}
+                  onChange={e => setStatusFilter(e.target.value)}
+                >
                   <option value="">All</option>
                   <option value="PASS">Pass</option>
                   <option value="FLAG">Flag</option>
@@ -158,7 +174,13 @@ export default function App() {
                 </select>
               </div>
             </div>
-            <InvoiceTable invoices={filtered} onPay={inv => setPayInvoice(inv)} onOverride={handleOverride} showToast={showToast} />
+
+            <InvoiceTable
+              invoices={filtered}
+              onPay={inv => setPayInvoice(inv)}
+              onOverride={handleOverride}
+              showToast={showToast}
+            />
           </div>
         </>
       )}
