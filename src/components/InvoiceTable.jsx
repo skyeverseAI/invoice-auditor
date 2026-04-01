@@ -30,7 +30,14 @@ export default function InvoiceTable({ invoices, onPay, onOverride, showToast })
               <td className="td--muted td--date">{inv.Invoice_Date || '—'}</td>
               <td className="td--mono">{inv.Total_Amount ? `$${parseFloat(inv.Total_Amount).toFixed(2)}` : '—'}</td>
               <td><Badge status={inv.Status} /></td>
-              <td className="td--reason col-reason" title={inv.Flag_Reason}>{inv.Flag_Reason || '—'}</td>
+              <td className="td--reason col-reason" title={inv.Flag_Reason}>
+                {inv.Flag_Reason || '—'}
+                {inv.Warning_Reason && (
+                  <div style={{ color: 'var(--amber-mid)', fontSize: '10px', marginTop: '2px' }}>
+                    ⚠ {inv.Warning_Reason}
+                  </div>
+                )}
+              </td>
               <td className="td--actions">
                 {inv.Status === 'PASS' && (
                   <button className="btn btn--pay" onClick={() => onPay(inv)}>
